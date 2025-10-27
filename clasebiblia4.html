@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Reforma Protestante - Presentación</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 100%;
+            max-width: 1400px;
+            height: 90vh;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            position: relative;
+            border: 8px solid #ffffff;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: linear-gradient(90deg, #1a2a6c, #b21f1f);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .header .slide-counter {
+            font-size: 1rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
+        .slides-container {
+            width: 100%;
+            flex-grow: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 40px 60px;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide.prev {
+            transform: translateX(-100%);
+        }
+
+        .slide-title {
+            font-family: 'Montserrat', sans-serif;
+            color: #b21f1f;
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 4px solid #1a2a6c;
+            padding-bottom: 15px;
+            position: relative;
+        }
+
+        .slide-title::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background-color: #fdbb2d;
+        }
+
+        .slide-content {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .slide-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .slide-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .slide-content::-webkit-scrollbar-thumb {
+            background: #1a2a6c;
+            border-radius: 10px;
+        }
+
+        .slide-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .slide-content h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: #1a2a6c;
+            margin: 25px 0 15px;
+            font-size: 1.7rem;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .slide-content h3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            background-color: #b21f1f;
+            border-radius: 50%;
+        }
+
+        .slide-content ul {
+            margin-left: 35px;
+            margin-bottom: 25px;
+        }
+
+        .slide-content li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 10px;
+        }
+
+        .slide-content li::before {
+            content: '•';
+            position: absolute;
+            left: -15px;
+            color: #b21f1f;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background-color: #ffeb3b;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+            position: relative;
+            display: inline-block;
+        }
+
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #b21f1f;
+            border-radius: 2px;
+        }
+
+        .sola-box {
+            background-color: #f5f5f5;
+            border-left: 6px solid #1a2a6c;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sola-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(to bottom, #1a2a6c, #b21f1f);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .comparison-table th {
+            background: linear-gradient(90deg, #1a2a6c, #2a3a7c);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .comparison-table tr:hover {
+            background-color: #e9f5ff;
+            transition: background-color 0.3s;
+        }
+
+        .bible-reference {
+            color: #1a2a6c;
+            font-weight: 500;
+            font-style: italic;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .bible-verse {
+            background-color: rgba(253, 187, 45, 0.1);
+            padding: 8px;
+            border-radius: 5px;
+            margin-top: 5px;
+            font-size: 0.9rem;
+            font-style: italic;
+            color: #555;
+        }
+
+        .navigation {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #eee;
+        }
+
+        .nav-btn {
+            background: linear-gradient(90deg, #1a2a6c, #2a3a7c);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(90deg, #b21f1f, #c22f2f);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        .nav-btn:active {
+            transform: translateY(0);
+        }
+
+        .nav-btn i {
+            font-size: 1rem;
+        }
+
+        .slide-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .indicator {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: #ccc;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .indicator:hover {
+            transform: scale(1.2);
+        }
+
+        .indicator.active {
+            background-color: #1a2a6c;
+            transform: scale(1.2);
+        }
+
+        .indicator.active::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border: 2px solid #1a2a6c;
+            border-radius: 50%;
+            opacity: 0.5;
+        }
+
+        .reformation-icon {
+            text-align: center;
+            font-size: 4rem;
+            margin: 15px 0;
+            color: #1a2a6c;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .key-point {
+            background: linear-gradient(90deg, rgba(26, 42, 108, 0.1), rgba(178, 31, 31, 0.1));
+            border-left: 4px solid #b21f1f;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            font-weight: 500;
+        }
+
+        .timeline {
+            position: relative;
+            margin: 30px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 30px;
+            height: 100%;
+            width: 4px;
+            background: linear-gradient(to bottom, #1a2a6c, #b21f1f);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 70px;
+            margin-bottom: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 22px;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #1a2a6c;
+            border: 4px solid white;
+            box-shadow: 0 0 0 4px rgba(26, 42, 108, 0.2);
+        }
+
+        .timeline-date {
+            font-weight: 600;
+            color: #b21f1f;
+            margin-bottom: 5px;
+        }
+
+        .quote {
+            font-style: italic;
+            padding: 20px;
+            background-color: rgba(253, 187, 45, 0.1);
+            border-left: 4px solid #fdbb2d;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .quote::before {
+            content: '"';
+            position: absolute;
+            top: 0;
+            left: 10px;
+            font-size: 3rem;
+            color: rgba(253, 187, 45, 0.3);
+            font-family: Georgia, serif;
+        }
+
+        .quote-content {
+            padding-left: 20px;
+        }
+
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #1a2a6c, #b21f1f);
+            transition: width 0.5s ease;
+        }
+
+        .fullscreen-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 5px;
+            transition: transform 0.3s;
+        }
+
+        .fullscreen-btn:hover {
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            .slide-title {
+                font-size: 1.8rem;
+            }
+            
+            .slide-content {
+                font-size: 1rem;
+            }
+            
+            .presentation-container {
+                height: 95vh;
+                border: 5px solid #ffffff;
+            }
+            
+            .slide {
+                padding: 20px 30px;
+            }
+            
+            .header h1 {
+                font-size: 1.3rem;
+            }
+            
+            .nav-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .reformation-icon {
+                font-size: 3rem;
+            }
+            
+            .comparison-table {
+                font-size: 0.85rem;
+            }
+            
+            .comparison-table th, .comparison-table td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="header">
+            <h1>La Reforma Protestante</h1>
+            <div class="slide-counter">
+                <span id="current-slide">1</span> / <span id="total-slides">6</span>
+            </div>
+            <button class="fullscreen-btn" id="fullscreen-btn">
+                <i class="fas fa-expand"></i>
+            </button>
+        </div>
+        
+        <div class="slides-container">
+            <!-- Slide 1: Introducción -->
+            <div class="slide active">
+                <h2 class="slide-title">La Reforma Protestante</h2>
+                <div class="slide-content">
+                    <div class="reformation-icon">✝️</div>
+                    <p>¡Hola a todos! Es un privilegio compartir este tiempo con ustedes, jóvenes y adolescentes. Hoy vamos a reflexionar sobre un evento que cambió el mundo hace 500 años: la Reforma Protestante.</p>
+                    
+                    <div class="key-point">
+                        Aunque parezca historia antigua, sin el movimiento de la Reforma, muchos de nosotros no tendríamos la salvación, literalmente hablando.
+                    </div>
+                    
+                    <p>Lo más importante: la Reforma no ha terminado. Las mismas fallas doctrinales que existían entonces nos afectan hoy, por lo que el mensaje de la Reforma sigue siendo vital para nuestra generación.</p>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-date">1517</div>
+                            <div>Martín Lutero clava sus 95 tesis en la puerta de la catedral de Wittenberg</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">1521</div>
+                            <div>Lutero es excomulgado y declarado hereje en la Dieta de Worms</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">Hoy</div>
+                            <div>Los principios de la Reforma siguen siendo relevantes para la iglesia contemporánea</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="progress-bar" style="width: 16.66%"></div>
+            </div>
+
+            <!-- Slide 2: El Origen de la Llama -->
+            <div class="slide">
+                <h2 class="slide-title">I. El Origen de la Llama: Martín Lutero y la Venta de Indulgencias</h2>
+                <div class="slide-content">
+                    <p>La Reforma se produjo en medio de mucho oscurantismo e ignorancia religiosa. El sistema religioso de la época promovía malas concepciones y conjeturas erradas.</p>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-date">1505</div>
+                            <div>Un rayo que casi lo mata lleva a Lutero a prometer convertirse en monje agustiniano</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">1507</div>
+                            <div>Lutero es ordenado sacerdote</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">1510</div>
+                            <div>Lutero visita Roma y se encuentra con una ciudad completamente corrompida</div>
+                        </div>
+                    </div>
+                    
+                    <p>El detonante que encendió a Lutero fue la venta de indulgencias. Estas eran esencialmente el perdón de pecados a cambio de dinero, con el objetivo de construir la Basílica de San Pedro.</p>
+                    
+                    <div class="quote">
+                        <div class="quote-content">
+                            "Tan pronto como la moneda cae en el receptáculo de metal y suena tin, asimismo tan pronto como eso ocurre, un alma sale del purgatorio" - Johann Tetzel
+                        </div>
+                    </div>
+                    
+                    <p>El 31 de octubre de 1517, Martín Lutero clavó sus 95 tesis en la puerta de la catedral de Wittenberg. Su propósito inicial no era dividir la iglesia, sino invitar a los académicos a debatir la teología detrás de las indulgencias.</p>
+                </div>
+                <div class="progress-bar" style="width: 33.33%"></div>
+            </div>
+
+            <!-- Slide 3: Las Cinco Solas -->
+            <div class="slide">
+                <h2 class="slide-title">II. Las Grandes Verdades: Las Cinco Solas</h2>
+                <div class="slide-content">
+                    <p>Cuando Lutero despertó a la realidad de la Palabra de Dios, él y los demás reformadores formularon las Cinco Solas. Estas doctrinas transformaron el mundo.</p>
+                    
+                    <div class="sola-box">
+                        <h3>1. Sola Fide y Sola Gratia (La Esencia de la Reforma)</h3>
+                        <p>La lucha de Lutero por encontrar paz se resolvió cuando comenzó a enseñar los libros de Romanos (1515), Gálatas (1516) y Hebreos (1517). Él entendió que la salvación no es por obras, sino un regalo de Dios.</p>
+                        <ul>
+                            <li><span class="highlight">Sola Gratia</span> (Salvación por gracia solamente).</li>
+                            <li><span class="highlight">Sola Fide</span> (Salvación por fe solamente).</li>
+                        </ul>
+                        <p>En 1519, Lutero comprendió que la justicia de Dios (la rectitud moral necesaria para entrar al cielo) no es algo que ganamos con buenas obras, sino algo que Cristo otorga pasivamente y que es imputado a nuestra cuenta por medio de la fe.</p>
+                        <p>Los reformadores llamaron a esto el principio material o la esencia de la Reforma: cómo se alcanza la justificación o el perdón de los pecados.</p>
+                    </div>
+                    
+                    <div class="sola-box">
+                        <h3>2. Sola Scriptura (La Única Autoridad)</h3>
+                        <p>Este principio es el principio formal o la metodología que causó la Reforma.</p>
+                        <p>Cuando Lutero fue citado ante la Dieta de Worms en 1521 y se le exigió retractarse de sus escritos, él dio su famosa respuesta basada en Sola Scriptura:</p>
+                        <div class="quote">
+                            <div class="quote-content">
+                                "A menos que yo sea convencido por el testimonio de las escrituras o por la razón clara... mi conciencia es cautiva de la palabra de Dios, no puedo y no voy a retractarme en nada ya que no es ni seguro ni justo ir en contra de la conciencia. Que Dios me ayude. Amén".
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="progress-bar" style="width: 50%"></div>
+            </div>
+
+            <!-- Slide 4: Implicaciones de Sola Scriptura -->
+            <div class="slide">
+                <h2 class="slide-title">Implicaciones de Sola Scriptura</h2>
+                <div class="slide-content">
+                    <p><span class="highlight">Sola Scriptura</span> significa que solamente la Palabra de Dios es la última y máxima autoridad en materia de fe y práctica.</p>
+                    
+                    <h3>Implicaciones de Sola Scriptura para nosotros hoy:</h3>
+                    <ul>
+                        <li><span class="highlight">Inspiración y Autoridad:</span> Solo la Biblia es inspirada por Dios y nada más; el Canon está cerrado. Toda escritura fue "exhalada por Dios" (Theopneustos). Por eso, la Biblia es inerrante (sin error) e infalible (no fallará en llevarte a la salvación).</li>
+                        <li><span class="highlight">Suficiencia:</span> La Biblia contiene todo lo que Dios necesita decirnos para la salvación y para que confiemos en Él y le obedezcamos perfectamente. Contiene todo lo que la iglesia necesita para plantarse, desarrollarse y aconsejar al pueblo.</li>
+                        <li><span class="highlight">Contra las Revelaciones Extrabíblicas:</span> El rechazo de Sola Scriptura abre la puerta a aberraciones como el evangelio de la prosperidad, visiones, revelaciones, sueños, viajes al cielo o al infierno, o falsos apóstoles y profetas. Cuando alguien habla de parte de Dios, si lo que dice no es conforme a esta palabra, "no hay luz en ellos".</li>
+                        <li><span class="highlight">Contra la Tradición:</span> Históricamente, tanto los fariseos en la época de Cristo como Roma invalidaron la Palabra de Dios colocando la tradición por encima o al lado de ella. Roma sostiene que la tradición, las escrituras y el magisterio (la enseñanza de la iglesia) están unidos y ligados, y que ninguno puede sostenerse sin los otros. Nosotros negamos esto, afirmando que la Biblia es la norma Suprema que ata la conciencia y que la autoridad de la iglesia está subordinada a ella.</li>
+                    </ul>
+                    
+                    <div class="key-point">
+                        La Palabra de Dios es la única regla de fe y práctica. Todo lo que necesitamos para nuestra salvación y para vivir una vida que agrada a Dios se encuentra en las Escrituras.
+                    </div>
+                </div>
+                <div class="progress-bar" style="width: 66.66%"></div>
+            </div>
+
+            <!-- Slide 5: El Impacto de la Reforma -->
+            <div class="slide">
+                <h2 class="slide-title">III. El Impacto de la Reforma en su Tiempo</h2>
+                <div class="slide-content">
+                    <p>La Reforma rescató el evangelio de las manos de los hombres y trajo cambios fundamentales en la práctica y la teología de la iglesia:</p>
+                    <ul>
+                        <li><span class="highlight">Centralidad del Púlpito:</span> Los reformadores simbolizaron la centralidad de la Palabra al mover el púlpito (desde donde se predica) al centro de la iglesia.</li>
+                        <li><span class="highlight">La Comunión (Santa Cena):</span> Se cambió el concepto de la transustanciación (el pan y el vino se convierten físicamente en el cuerpo y sangre de Cristo). Se pasó a entenderse como un memorial de la muerte de nuestro Señor Jesucristo a favor de nosotros.</li>
+                        <li><span class="highlight">El Sacerdocio de Todos los Creyentes:</span> Se entendió que, si Cristo vive en nosotros, somos "sacerdocio real, nación santa, pueblo escogido de Dios".</li>
+                        <li><span class="highlight">Interpretación de la Escritura:</span> Se rechazó la idea de que solo el magisterio de la iglesia era capaz de interpretar la Palabra. Se afirmó que las cosas relacionadas con la salvación pueden ser entendidas por todo el mundo, incluso por niños.</li>
+                    </ul>
+                    
+                    <h3>IV. La Lucha Continúa: La Reforma Hoy</h3>
+                    <p>Casi 500 años después, este movimiento transformador no llegó de manera significativa a América Latina sino hasta ahora. El problema de la iglesia evangélica latinoamericana hoy es que ha adoptado muchas revelaciones extrabíblicas que necesitan ser eliminadas si abrazamos Sola Scriptura.</p>
+                    
+                    <div class="quote">
+                        <div class="quote-content">
+                            "Todos los problemas de la iglesia y del mundo se deben a una desviación de la autoridad de la palabra." - Martyn Lloyd-Jones
+                        </div>
+                    </div>
+                    
+                    <p>La iglesia tiene una responsabilidad monumental: es denominada "columna y sostén de la verdad". Si la iglesia renuncia a la Palabra de Dios, no hay esperanza.</p>
+                    
+                    <div class="key-point">
+                        <span class="highlight">Nuestro desafío:</span> Estamos llamados para vivir en la Palabra de Dios. Necesitamos manejar la Palabra con precisión y no con ligereza, ya que esta es la revelación de la mente de Dios.
+                    </div>
+                    
+                    <p>La única esperanza que tenemos como sociedad, como iglesia y como individuos, está en la Palabra de Dios.</p>
+                    
+                    <div class="quote">
+                        <div class="quote-content">
+                            Abraza este principio: Sola Scriptura. Que Dios nos permita levantar un ejército de hombres y mujeres que abracen y promuevan la doctrina de la gracia.
+                        </div>
+                    </div>
+                </div>
+                <div class="progress-bar" style="width: 83.33%"></div>
+            </div>
+
+            <!-- Slide 6: Comparación histórica con referencias bíblicas -->
+            <div class="slide">
+                <h2 class="slide-title">Comparación Histórica: La Reforma y Nuestro Tiempo</h2>
+                <div class="slide-content">
+                    <h3>I. El Desafío a la Autoridad de la Palabra (Sola Scriptura)</h3>
+                    <p>El principio formal que causó la Reforma fue Sola Scriptura: la idea de que solo la Palabra de Dios es la autoridad máxima y final en materia de fe y práctica. Este principio fue violado históricamente de maneras distintas, pero con el mismo resultado:</p>
+                    
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Época de la Reforma (Siglo XVI)</th>
+                                <th>Cristianos y la Iglesia Hoy</th>
+                                <th>Lo que dice la Biblia</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Autoridad por la Tradición: Roma invalidaba la Palabra de Dios colocando la tradición por encima o al lado de la Escritura.</td>
+                                <td>Autoridad por Revelación Extrabíblica: Hoy en día, una gran parte del mundo evangélico rechaza el principio de Sola Scriptura y el principio de la suficiencia de las escrituras.</td>
+                                <td>
+                                    <span class="bible-reference">2 Timoteo 3:16-17</span>
+                                    <div class="bible-verse">"Toda la Escritura es inspirada por Dios y útil para enseñar, para redargüir, para corregir, para instruir en justicia."</div>
+                                    <span class="bible-reference">Apocalipsis 22:18-19</span>
+                                    <div class="bible-verse">"Yo testifico a todo aquel que oye las palabras de la profecía de este libro: Si alguno añadiere a estas cosas, Dios traerá sobre él las plagas."</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>El Oscurantismo Religioso: La Reforma surgió en medio de una gran ignorancia religiosa y oscurantismo.</td>
+                                <td>La Desviación de la Palabra: Se afirma que todos los problemas de la iglesia hoy y del mundo se deben a una desviación de la autoridad de la palabra.</td>
+                                <td>
+                                    <span class="bible-reference">Hechos 17:11</span>
+                                    <div class="bible-verse">"Y estos eran más nobles que los que estaban en Tesalónica, pues recibieron la palabra con toda solicitud, escudriñando cada día las Escrituras para ver si estas cosas eran así."</div>
+                                    <span class="bible-reference">Oseas 4:6</span>
+                                    <div class="bible-verse">"Mi pueblo fue destruido porque le faltó conocimiento."</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Interpretación Alegórica: Prevalecía la interpretación alegórica, llevando a conjeturas y conclusiones erradas.</td>
+                                <td>Revelaciones Extrabíblicas y Contradictorias: Se introducen constantemente visiones, revelaciones, sueños y viajes al cielo o al infierno.</td>
+                                <td>
+                                    <span class="bible-reference">Gálatas 1:8</span>
+                                    <div class="bible-verse">"Mas si aun nosotros, o un ángel del cielo, os anunciare otro evangelio diferente del que os hemos anunciado, sea anatema."</div>
+                                    <span class="bible-reference">2 Pedro 1:20-21</span>
+                                    <div class="bible-verse">"Entendiendo primero esto, que ninguna profecía de la Escritura es de interpretación privada, porque nunca la profecía fue traída por voluntad humana."</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h3>II. La Distorsión del Evangelio y la Justificación</h3>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Época de la Reforma (Siglo XVI)</th>
+                                <th>Cristianos y la Iglesia Hoy</th>
+                                <th>Lo que dice la Biblia</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Salvación por Obras/Dinero: La justificación se creía que era algo que se ganaba con buenas obras. La venta de indulgencias era la manifestación más visible de esto.</td>
+                                <td>El Evangelio de la Prosperidad: Hoy se promueve el movimiento del evangelio de la prosperidad, con aberraciones como "proclámalo y recíbelo" o "reclama tu milagro".</td>
+                                <td>
+                                    <span class="bible-reference">Efesios 2:8-9</span>
+                                    <div class="bible-verse">"Porque por gracia sois salvos por medio de la fe; y esto no de vosotros, pues es don de Dios; no por obras, para que nadie se gloríe."</div>
+                                    <span class="bible-reference">Romanos 3:28</span>
+                                    <div class="bible-verse">"Porque concluimos que el hombre es justificado por fe sin las obras de la ley."</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>La Inmoralidad en la Cúspide: Lutero se sintió devastado por la corrupción e inmoralidad que encontró en Roma.</td>
+                                <td>Liderazgo Corrompido: Hoy se observa la presencia de lobos vestidos de ovejas, que son pastores y maestros que no han abrazado el principio de Sola Scriptura.</td>
+                                <td>
+                                    <span class="bible-reference">1 Timoteo 3:1-7</span>
+                                    <div class="bible-verse">"Si alguno anhela obispado, buena obra desea... irreprensible, marido de una sola mujer... no dado al vino, no pendenciero, no codicioso de ganancias deshonestas."</div>
+                                    <span class="bible-reference">Mateo 7:15-20</span>
+                                    <div class="bible-verse">"Guardaos de los falsos profetas, que vienen a vosotros con vestidos de ovejas, pero por dentro son lobos rapaces."</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h3>IV. Perspectiva para América Latina</h3>
+                    <p>Existe una diferencia importante en el contexto geográfico:</p>
+                    <ul>
+                        <li>El movimiento transformador de la Reforma no llegó de manera significativa a América Latina hasta hace relativamente poco.</li>
+                        <li>Hoy, el grito de batalla de la Iglesia Latinoamericana es Sola Scriptura, porque ha adoptado una serie de revelaciones extrabíblicas que deben ser eliminadas.</li>
+                    </ul>
+                    
+                    <div class="key-point">
+                        La Reforma no es solo un evento histórico, sino un principio vivo que debemos aplicar hoy en nuestras iglesias y vidas personales.
+                    </div>
+                </div>
+                <div class="progress-bar" style="width: 100%"></div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-btn" id="prev-btn">
+                <i class="fas fa-arrow-left"></i> Anterior
+            </button>
+            
+            <div class="slide-indicators">
+                <div class="indicator active" data-slide="0"></div>
+                <div class="indicator" data-slide="1"></div>
+                <div class="indicator" data-slide="2"></div>
+                <div class="indicator" data-slide="3"></div>
+                <div class="indicator" data-slide="4"></div>
+                <div class="indicator" data-slide="5"></div>
+            </div>
+            
+            <button class="nav-btn" id="next-btn">
+                Siguiente <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const indicators = document.querySelectorAll('.indicator');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const currentSlideEl = document.getElementById('current-slide');
+            const totalSlidesEl = document.getElementById('total-slides');
+            const fullscreenBtn = document.getElementById('fullscreen-btn');
+            let currentSlide = 0;
+            
+            // Establecer el número total de diapositivas
+            totalSlidesEl.textContent = slides.length;
+
+            function showSlide(index) {
+                // Ocultar todas las diapositivas
+                slides.forEach((slide, i) => {
+                    slide.classList.remove('active');
+                    if (i < index) {
+                        slide.classList.add('prev');
+                    } else {
+                        slide.classList.remove('prev');
+                    }
+                });
+                
+                // Mostrar la diapositiva actual
+                slides[index].classList.add('active');
+                
+                // Actualizar indicadores
+                indicators.forEach(indicator => {
+                    indicator.classList.remove('active');
+                });
+                indicators[index].classList.add('active');
+                
+                // Actualizar contador de diapositivas
+                currentSlideEl.textContent = index + 1;
+                
+                // Actualizar barra de progreso
+                const progressBar = slides[index].querySelector('.progress-bar');
+                if (progressBar) {
+                    progressBar.style.width = `${((index + 1) / slides.length) * 100}%`;
+                }
+                
+                currentSlide = index;
+                
+                // Deshabilitar botones de navegación según corresponda
+                prevBtn.disabled = index === 0;
+                nextBtn.disabled = index === slides.length - 1;
+            }
+
+            // Navegación con botones
+            prevBtn.addEventListener('click', function() {
+                if (currentSlide > 0) {
+                    showSlide(currentSlide - 1);
+                }
+            });
+
+            nextBtn.addEventListener('click', function() {
+                if (currentSlide < slides.length - 1) {
+                    showSlide(currentSlide + 1);
+                }
+            });
+
+            // Navegación con indicadores
+            indicators.forEach(indicator => {
+                indicator.addEventListener('click', function() {
+                    const slideIndex = parseInt(this.getAttribute('data-slide'));
+                    showSlide(slideIndex);
+                });
+            });
+
+            // Navegación con teclado
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'ArrowLeft' && currentSlide > 0) {
+                    showSlide(currentSlide - 1);
+                } else if (event.key === 'ArrowRight' && currentSlide < slides.length - 1) {
+                    showSlide(currentSlide + 1);
+                } else if (event.key === 'Home') {
+                    showSlide(0);
+                } else if (event.key === 'End') {
+                    showSlide(slides.length - 1);
+                }
+            });
+
+            // Funcionalidad de pantalla completa
+            fullscreenBtn.addEventListener('click', function() {
+                const container = document.querySelector('.presentation-container');
+                
+                if (!document.fullscreenElement) {
+                    container.requestFullscreen().catch(err => {
+                        console.error(`Error attempting to enable fullscreen: ${err.message}`);
+                    });
+                    fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i>';
+                } else {
+                    document.exitFullscreen();
+                    fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
+                }
+            });
+
+            // Detectar cambios en el modo de pantalla completa
+            document.addEventListener('fullscreenchange', function() {
+                const container = document.querySelector('.presentation-container');
+                if (!document.fullscreenElement) {
+                    fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i>';
+                }
+            });
+
+            // Inicializar presentación
+            showSlide(0);
+        });
+    </script>
+</body>
+</html>
